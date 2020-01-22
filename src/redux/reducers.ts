@@ -4,6 +4,7 @@ import {
   AddTodoAction,
   ToggleTodoAction,
   SetFilterAction,
+  DeleteTodoAction,
 } from "./actionCreators";
 import {
   initialTodoState,
@@ -12,7 +13,7 @@ import {
 
 const todoReducer = (
   todoState = initialTodoState,
-  action: AddTodoAction | ToggleTodoAction
+  action: AddTodoAction | ToggleTodoAction | DeleteTodoAction
 ) => {
   switch (action.type) {
     case "ADD_TODO": {
@@ -33,6 +34,10 @@ const todoReducer = (
           completed: !todo.completed,
         }
         : todo));
+    }
+    case "DELETE_TODO": {
+      const newState = todoState.filter((todo) => todo.id !== action.id);
+      return newState;
     }
     default:
       return todoState;

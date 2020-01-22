@@ -6,9 +6,9 @@ export const addTodo = (content: string) => ({
   content,
 });
 
-export const setFilter = (filter: FilterTypes) => ({
-  type: "SET_FILTER",
-  filter,
+export const deleteTodo = (id: string) => ({
+  type: "DELETE_TODO" as TodoAction,
+  id,
 });
 
 export const toggleTodo = (id: string) => ({
@@ -16,9 +16,15 @@ export const toggleTodo = (id: string) => ({
   id,
 });
 
-export type TodoAction = "ADD_TODO" | "TOGGLE_TODO";
+export const setFilter = (filter: FilterTypes) => ({
+  type: "SET_FILTER",
+  filter,
+});
+
+export type TodoAction = "ADD_TODO" | "TOGGLE_TODO" | "DELETE_TODO";
 export type AddTodoAction = ReturnType<typeof addTodo>;
 export type ToggleTodoAction = ReturnType<typeof toggleTodo>;
+export type DeleteTodoAction = ReturnType<typeof deleteTodo>;
 
 export type FilterTypes = "ALL" | "COMPLETED" | "ACTIVE";
 export type SetFilterAction = ReturnType<typeof setFilter>;
