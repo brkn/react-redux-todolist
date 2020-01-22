@@ -9,16 +9,15 @@ import {Input} from "../Input/Input";
 import {Footer} from "../Footer/Footer";
 import {Header} from "../Header/Header";
 
-export const App = () => {
-  return (
-    <main>
-      <Header />
-
-      <Provider store={store}>
+export const App = () => (
+  <main>
+    <Header />
+    <Provider store={store}>
+      <div className={"main-wrapper"}>
         <Input />
         <TodoList />
         <Footer />
-      </Provider>
-    </main>
-  );
-};
+      </div>
+    </Provider>
+  </main>
+);
