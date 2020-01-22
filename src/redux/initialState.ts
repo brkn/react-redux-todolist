@@ -4,7 +4,7 @@ import {rootReducer} from "./reducers";
 
 export const initialTodoState: TodoItemModel[] = [{
   id: "first-todo",
-  content: "first todo here, completed",
+  content: "Finish Getir assignment",
   completed: true,
 }];
 

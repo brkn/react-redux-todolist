@@ -2,6 +2,7 @@ import "./Footer.scss";
 
 import React from "react";
 import {connect} from "react-redux";
+import classNames from "classnames";
 
 import {
   setFilter,
@@ -10,25 +11,41 @@ import {
 import {StoreState} from "../../redux/initialState";
 
 export const FooterComponent = ({
+  todoCount,
+  activeTodoCount,
   dispatchSetFilter,
   selectedFilter,
   isThereAnyTodo,
 }: FooterProps) => {
+  const counter = <p>{`${activeTodoCount}/${todoCount} todos left`}</p>;
+
+  if (!isThereAnyTodo) {
+    return <footer className={"footer"}>{counter}</footer>;
+  }
+
   const handleOptionChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
     dispatchSetFilter(event.target.value as FilterTypes);
   };
 
-  if (!isThereAnyTodo) {
-    return <></>;
-  }
+  const allButtonClassName = classNames("all-button", {
+    selected: selectedFilter === "ALL",
+  });
+  const activeButtonClassName = classNames("active-button", {
+    selected: selectedFilter === "ACTIVE",
+  });
+  const completedButtonClassName = classNames("completed-button", {
+    selected: selectedFilter === "COMPLETED",
+  });
 
   return (
     <footer className={"footer"}>
-      <form>
-        <div className={"radio"}>
-          <label>
+      {counter}
+
+      <ul className={"footer-filters-wrapper"}>
+        <li className={"radio-button"}>
+          <label className={allButtonClassName}>
             <input
               type={"radio"}
               value={"ALL" as FilterTypes}
@@ -37,9 +54,9 @@ export const FooterComponent = ({
             />
             {"All"}
           </label>
-        </div>
-        <div className={"radio"}>
-          <label>
+        </li>
+        <li className={"radio-button"}>
+          <label className={activeButtonClassName}>
             <input
               type={"radio"}
               value={"ACTIVE" as FilterTypes}
@@ -48,9 +65,9 @@ export const FooterComponent = ({
             />
             {"Active"}
           </label>
-        </div>
-        <div className={"radio"}>
-          <label>
+        </li>
+        <li className={"radio-button"}>
+          <label className={completedButtonClassName}>
             <input
               type={"radio"}
               value={"COMPLETED" as FilterTypes}
@@ -59,13 +76,15 @@ export const FooterComponent = ({
             />
             {"Completed"}
           </label>
-        </div>
-      </form>
+        </li>
+      </ul>
     </footer>
   );
 };
 
 const mapStateToProps = (storeState: StoreState) => ({
+  todoCount: storeState.todos.length,
+  activeTodoCount: storeState.todos.filter((todo) => !todo.completed).length,
   isThereAnyTodo: storeState.todos.length > 0,
   selectedFilter: storeState.filter,
 });
