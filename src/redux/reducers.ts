@@ -52,6 +52,6 @@ const filterReducer = (
 };
 
 export const rootReducer = combineReducers({
-  todoReducer,
-  filterReducer,
+  todos: todoReducer,
+  filter: filterReducer,
 });

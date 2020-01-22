@@ -8,7 +8,6 @@ import {
   FilterTypes,
 } from "../../redux/actionCreators";
 import {StoreState} from "../../redux/initialState";
-import {store} from "../../redux";
 
 export const FooterComponent = ({
   dispatchSetFilter,
@@ -67,8 +66,8 @@ export const FooterComponent = ({
 };
 
 const mapStateToProps = (storeState: StoreState) => ({
-  isThereAnyTodo: storeState.todoReducer.length > 0,
-  selectedFilter: storeState.filterReducer,
+  isThereAnyTodo: storeState.todos.length > 0,
+  selectedFilter: storeState.filter,
 });
 
 const dispatchToProps = {

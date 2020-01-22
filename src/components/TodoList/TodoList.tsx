@@ -32,8 +32,8 @@ const TodoListComponent = ({todos, currentFilter}: TodoListComponentProps) => {
 };
 
 const mapStateToProps = (storeState: StoreState) => ({
-  todos: storeState.todoReducer,
-  currentFilter: storeState.filterReducer,
+  todos: storeState.todos,
+  currentFilter: storeState.filter,
 });
 
 export const TodoList = connect(mapStateToProps)(TodoListComponent);
