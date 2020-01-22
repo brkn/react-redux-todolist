@@ -62,7 +62,7 @@
 /* accessibility */
 [type="checkbox"]:checked:focus + label:before,
 [type="checkbox"]:not(:checked):focus + label:before {
-  border: 2px dotted yellow;
+  border: 2px dotted rgb(95, 95, 44);;
 }
 
 /* hover style just for information */
@@ -100,6 +100,12 @@ label:hover:before {
 
   border: none;
 
+  cursor: pointer;
+
   opacity: 0;
   transition: linear opacity 0.2s;
+
+  &:focus{
+    opacity: 1;
+  }
 }
