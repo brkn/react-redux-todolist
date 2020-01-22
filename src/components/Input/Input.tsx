@@ -1,21 +1,20 @@
 import "./Input.scss";
 
 import React, {useState} from "react";
+import {connect} from "react-redux";
+
+import {addTodo} from "../../redux/actionCreators";
 
 const KEYBOARD_EVENT_KEY = {
   ENTER: "Enter",
   ESCAPE: "Escape",
 };
 
-export const Input: React.FC = () => {
+export const InputComponent = ({dispatchAddTodo}: InputProps) => {
   const [
     todoText,
     setTodoText
   ] = useState("");
-
-  const addTodo = function mockAddTodo(trimmedTodoText: string) {
-    return "FIXME";
-  };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     switch (event.key) {
@@ -25,7 +24,7 @@ export const Input: React.FC = () => {
         const trimmedTodoText = todoText.trim();
 
         if (trimmedTodoText) {
-          addTodo(trimmedTodoText);
+          dispatchAddTodo(trimmedTodoText);
           setTodoText("");
         }
         break;
@@ -56,3 +55,11 @@ export const Input: React.FC = () => {
     />
   );
 };
+
+const dispatchToProps = {
+  dispatchAddTodo: addTodo
+};
+
+export const Input = connect(null, dispatchToProps)(InputComponent);
+
+export type InputProps = typeof dispatchToProps;

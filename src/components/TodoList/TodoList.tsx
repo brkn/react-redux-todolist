@@ -1,40 +1,26 @@
 import "./TodoList.scss";
 
 import React from "react";
+import {connect} from "react-redux";
 
-import {
-  TodoItemModel,
-  TodoItem,
-} from "../TodoItem/TodoItem";
+import {TodoItem} from "../TodoItem/TodoItem";
+import {StoreState} from "../../redux/initialState";
 
-export const TodoList = () => {
-  const mockTodos: TodoItemModel[] = [
-    {
-      id: "todo-1",
-      content: "this is first todo",
-      completed: false,
-    },
-    {
-      id: "todo-2",
-      content: "this is second todo",
-      completed: false,
-    },
-    {
-      id: "todo-3",
-      content: "this is third todo, this is completed",
-      completed: true,
-    },
-  ];
-  const todoItems = mockTodos;
+const TodoListComponent = ({todos}: TodoListComponentProps) => (
+  <ul className="todo-list">
+    {todos.map((todoItem) => (
+      <TodoItem
+        key={todoItem.id}
+        todoItem={todoItem}
+      />
+    ))}
+  </ul>
+);
 
-  return (
-    <ul className="todo-list">
-      {todoItems.map((todoItem) => (
-        <TodoItem
-          key={todoItem.id}
-          todoItem={todoItem}
-        />
-      ))}
-    </ul>
-  );
-};
+const mapStateToProps = (storeState: StoreState) => ({
+  todos: storeState.todoReducer,
+});
+
+export const TodoList = connect(mapStateToProps)(TodoListComponent);
+
+type TodoListComponentProps = ReturnType<typeof mapStateToProps>;

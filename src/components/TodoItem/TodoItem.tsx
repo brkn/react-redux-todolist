@@ -2,6 +2,9 @@ import "./TodoItem.scss";
 
 import React from "react";
 import classNames from "classnames";
+import {connect} from "react-redux";
+
+import {toggleTodo} from "../../redux/actionCreators";
 
 export interface TodoItemModel {
   id: string;
@@ -9,27 +12,10 @@ export interface TodoItemModel {
   completed: boolean;
 }
 
-export interface TodoItemProps {
-  todoItem: TodoItemModel;
-}
-
-const changeCompletedStatusOfTodo = function mockChangeCompletedStatusOfTodo(
-  a: string,
-  b: boolean
-) {
-  return "asd";
-};
-
-export const TodoItem = ({todoItem}: TodoItemProps) => {
+const TodoItemComponent = ({todoItem, dispatchToggleTodo}: TodoItemProps) => {
   const todoContentClassName = classNames("todo-content", {
     completed: todoItem.completed,
   });
-
-  const handleCheckboxChange: React.ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
-    changeCompletedStatusOfTodo(todoItem.id, event.currentTarget.checked);
-  };
 
   return (
     <li className={"todo-item"}>
@@ -38,7 +24,9 @@ export const TodoItem = ({todoItem}: TodoItemProps) => {
         id={todoItem.id}
         type={"checkbox"}
         checked={todoItem.completed}
-        onChange={handleCheckboxChange}
+        onChange={() => {
+          dispatchToggleTodo(todoItem.id);
+        }}
       />
       <label
         htmlFor={todoItem.id}
@@ -49,3 +37,14 @@ export const TodoItem = ({todoItem}: TodoItemProps) => {
     </li>
   );
 };
+
+const dispatchToProps = {
+  dispatchToggleTodo: toggleTodo,
+};
+
+export const TodoItem = connect(null, dispatchToProps)(TodoItemComponent);
+
+export interface TodoItemOwnProps {
+  todoItem: TodoItemModel;
+}
+export type TodoItemProps = TodoItemOwnProps & typeof dispatchToProps;
