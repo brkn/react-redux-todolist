@@ -49,7 +49,7 @@ export const Input: React.FC = () => {
   return (
     <input
       className="todo-input"
-      placeholder="Write your todo, then press enter"
+      placeholder="Write your todo here"
       value={todoText}
       onKeyDown={handleKeyDown}
       onChange={handleChange}

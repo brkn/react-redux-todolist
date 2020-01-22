@@ -34,11 +34,13 @@ export const TodoItem = ({todoItem}: TodoItemProps) => {
   return (
     <li className={"todo-item"}>
       <input
+        className={"todo-checkbox"}
+        id={todoItem.id}
         type={"checkbox"}
         checked={todoItem.completed}
         onChange={handleCheckboxChange}
       />
-      <p className={todoContentClassName}>{todoItem.content}</p>
+      <label htmlFor={todoItem.id}>{todoItem.content}</label>
     </li>
   );
 };
