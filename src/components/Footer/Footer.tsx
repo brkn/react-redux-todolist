@@ -1,52 +1,61 @@
 import "./Footer.scss";
 
-import React, {useState} from "react";
+import React from "react";
+import {connect} from "react-redux";
 
-type RadioOption = "All" | "Active" | "Completed"
+import {
+  setFilter,
+  FilterTypes,
+} from "../../redux/actionCreators";
+import {StoreState} from "../../redux/initialState";
+import {store} from "../../redux";
 
-export const Footer: React.FC = () => {
-  const [
-    selectedRadio,
-    setSelectedRadio
-  ] = useState<RadioOption>("All");
-
+export const FooterComponent = ({
+  dispatchSetFilter,
+  selectedFilter,
+  isThereAnyTodo,
+}: FooterProps) => {
   const handleOptionChange: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
-    setSelectedRadio(event.target.value as RadioOption);
+    dispatchSetFilter(event.target.value as FilterTypes);
   };
 
+  if (!isThereAnyTodo) {
+    return <></>;
+  }
+
   return (
-    <footer className="footer">
+    <footer className={"footer"}>
       <form>
-        <div className="radio">
+        <div className={"radio"}>
           <label>
             <input
-              type="radio"
-              value="All"
-              checked={selectedRadio === "All"}
+              type={"radio"}
+              value={"ALL" as FilterTypes}
+              checked={selectedFilter === "ALL"}
               onChange={handleOptionChange}
             />
             {"All"}
           </label>
         </div>
-        <div className="radio">
+        <div className={"radio"}>
           <label>
             <input
-              type="radio"
-              value="Active"
-              checked={selectedRadio === "Active"}
+              type={"radio"}
+              value={"ACTIVE" as FilterTypes}
+              checked={selectedFilter === "ACTIVE"}
               onChange={handleOptionChange}
             />
             {"Active"}
           </label>
         </div>
-        <div className="radio">
+        <div className={"radio"}>
           <label>
             <input
-              type="radio"
-              value="Completed"
-              checked={selectedRadio === "Completed"}
+              type={"radio"}
+              value={"COMPLETED" as FilterTypes}
+              checked={selectedFilter === "COMPLETED"}
               onChange={handleOptionChange}
             />
             {"Completed"}
@@ -56,3 +65,20 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
+
+const mapStateToProps = (storeState: StoreState) => ({
+  isThereAnyTodo: storeState.todoReducer.length > 0,
+  selectedFilter: storeState.filterReducer,
+});
+
+const dispatchToProps = {
+  dispatchSetFilter: setFilter,
+};
+
+export const Footer = connect(
+  mapStateToProps,
+  dispatchToProps
+)(FooterComponent);
+
+export type FooterProps = ReturnType<typeof mapStateToProps> &
+  typeof dispatchToProps;
