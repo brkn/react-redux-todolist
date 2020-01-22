@@ -7,13 +7,18 @@ import {TodoList} from "../TodoList/TodoList";
 import {store} from "../../redux";
 import {Input} from "../Input/Input";
 import {Footer} from "../Footer/Footer";
+import {Header} from "../Header/Header";
 
-export const App: React.FC = () => {
+export const App = () => {
   return (
-    <Provider store={store}>
-      <Input />
-      <TodoList />
-      <Footer />
-    </Provider>
+    <main>
+      <Header />
+
+      <Provider store={store}>
+        <Input />
+        <TodoList />
+        <Footer />
+      </Provider>
+    </main>
   );
 };
