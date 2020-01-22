@@ -3,25 +3,27 @@ import {combineReducers} from "redux";
 import {
   AddTodoAction,
   ToggleTodoAction,
-  FilterTypes,
   SetFilterAction,
 } from "./actionCreators";
-import {TodoItemModel} from "../components/TodoItem/TodoItem";
+import {
+  initialTodoState,
+  initialFilterState,
+} from "./initialState";
 
 const todoReducer = (
-  todoState = [] as TodoItemModel[],
+  todoState = initialTodoState,
   action: AddTodoAction | ToggleTodoAction
 ) => {
   switch (action.type) {
     case "ADD_TODO": {
       const {id, content} = action as AddTodoAction;
       return [
-        ...todoState,
         {
           id,
           content,
           completed: false,
         },
+        ...todoState,
       ];
     }
     case "TOGGLE_TODO": {
@@ -38,7 +40,7 @@ const todoReducer = (
 };
 
 const filterReducer = (
-  filterState = "ALL" as FilterTypes,
+  filterState = initialFilterState,
   action: SetFilterAction
 ) => {
   switch (action.type) {
@@ -51,5 +53,5 @@ const filterReducer = (
 
 export const rootReducer = combineReducers({
   todoReducer,
-  filterReducer
+  filterReducer,
 });
