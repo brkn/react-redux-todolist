@@ -9,6 +9,7 @@ module.exports = {
     es6: true,
   },
   extends: [
+    "airbnb-base",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
@@ -50,7 +51,43 @@ module.exports = {
     },
   ],
   rules: {
-    // "prettier/prettier": "error", // they claim this is needed, it brakes indentation
+    // prettier rules
+    "max-len": [
+      "error",
+      {code: 80, ignoreStrings: true, ignoreTemplateLiterals: true},
+    ],
+    indent: ["error", 2],
+    semi: ["error", "always"],
+    "comma-dangle": ["error", "only-multiline"],
+    "object-curly-spacing": ["error", "never"],
+    quotes: ["error", "double"],
+    "arrow-parens": ["error", "always"],
+    "linebreak-style": 0,
+
+    // override airbnb
+    "no-console": ["off", "always"],
+    "no-use-before-define": ["error", {functions: false}],
+    "operator-linebreak": ["error", "before", {overrides: {"=": "after"}}],
+    "import/no-extraneous-dependencies": ["error", {devDependencies: true}],
+    "import/prefer-default-export": "off",
+
+    "array-bracket-newline": ["error", {minItems: 2}],
+    "array-element-newline": ["error", {minItems: 2}],
+    "object-curly-newline": [
+      "error",
+      {
+        /* ObjectExpression: "always",
+        ObjectPattern: {multiline: true}, */
+        ImportDeclaration: {
+          multiline: true,
+          minProperties: 2,
+          consistent: true,
+        },
+        ExportDeclaration: {multiline: true, minProperties: 2},
+      },
+    ],
+    "object-property-newline": "error",
+
     // For hooks
     "react-hooks/rules-of-hooks": 2,
     "react-hooks/exhaustive-deps": 1,
