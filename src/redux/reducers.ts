@@ -1,28 +1,55 @@
 import {combineReducers} from "redux";
 
-const todoReducer = (state = [], action: any) => {
-  /* switch (action.type) {
-    case "ADD_TODO":
+import {
+  AddTodoAction,
+  ToggleTodoAction,
+  FilterTypes,
+  SetFilterAction,
+} from "./actionCreators";
+import {TodoItemModel} from "../components/TodoItem/TodoItem";
+
+const todoReducer = (
+  todoState = [] as TodoItemModel[],
+  action: AddTodoAction | ToggleTodoAction
+) => {
+  switch (action.type) {
+    case "ADD_TODO": {
+      const {id, content} = action as AddTodoAction;
       return [
-        ...state,
+        ...todoState,
         {
-          id: action.id,
-          text: action.text,
+          id,
+          content,
           completed: false,
         },
       ];
-    case "TOGGLE_TODO":
-      return state.map((todo) =>
-        todo.id === action.id
-          ? {
-            ...todo,
-            completed: !todo.completed,
-          }
-          : todo
-      );
+    }
+    case "TOGGLE_TODO": {
+      return todoState.map((todo) => (todo.id === action.id
+        ? {
+          ...todo,
+          completed: !todo.completed,
+        }
+        : todo));
+    }
     default:
-      return state;
-  } */
+      return todoState;
+  }
 };
 
-export const rootReducer = combineReducers(todoReducer);
+const filterReducer = (
+  filterState = "ALL" as FilterTypes,
+  action: SetFilterAction
+) => {
+  switch (action.type) {
+    case "SET_FILTER":
+      return action.filter;
+    default:
+      return filterState;
+  }
+};
+
+export const rootReducer = combineReducers({
+  todoReducer,
+  filterReducer
+});

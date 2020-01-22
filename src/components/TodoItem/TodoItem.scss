@@ -73,3 +73,9 @@ label:hover:before {
 .todo-item {
   margin-top: 10px;
 }
+
+.todo-content {
+  &.completed {
+    text-decoration: line-through;
+  }
+}

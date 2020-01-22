@@ -40,7 +40,12 @@ export const TodoItem = ({todoItem}: TodoItemProps) => {
         checked={todoItem.completed}
         onChange={handleCheckboxChange}
       />
-      <label htmlFor={todoItem.id}>{todoItem.content}</label>
+      <label
+        htmlFor={todoItem.id}
+        className={todoContentClassName}
+      >
+        {todoItem.content}
+      </label>
     </li>
   );
 };
